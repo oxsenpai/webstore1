@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}    
+
+        <div class="products_content">
+            <h1>Категории</h1>
+
+            {% for c in categories %}
+
+        	<h2>{{c.name}}</h2>
+            {% for p in products %}
+
+            {% if p.category_id == c.id and p.available%}
+        	<div class="col col_14 product_gallery">
+            	<a href="{{p.get_absolute_url}}"><img src="{{p.image.url}}" alt="Product 01" /></a>
+                <h3>{{p.name}}</h3>
+                <p class="product_price">{{p.price}}</p>
+                <form action="{% url 'cart:cart_add' p.id %}" class="cart" method="post">
+                    {% csrf_token %}
+                    <button class="add_to_cart" type="submit" value="1" name="quantity">Добавить в корзину</button>
+                </form>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <a href="{{ c.get_absolute_url }}" class="more float_r">Еще</a>
+
+        <div class="cleaner h50"></div>
+        {% endfor %}
+
+
+    </div> <!-- END of main -->
+
+ 
+{% endblock %}

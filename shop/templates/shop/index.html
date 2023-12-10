@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+        <div id="content">
+
+            <h1>Все товары</h1>
+            {% for p in page_obj %}
+
+        	<div class="product_item">
+            	<a href="{{p.get_absolute_url}}"><img class = "product_item_img" src="{{p.image.url}}" alt="Product 01" /></a>
+                <div class = "product_item_info">
+                    <h3>{{p.name}}</h3>
+                    <p class="product_price">{{p.price}} ₽</p>
+                    <form action="{% url 'cart:cart_add' p.id %}" class="cart" method="post">
+                        {% csrf_token %}
+                        <button class="add_to_cart" type="submit" value="1" name="quantity">Добавить в корзину</button>
+                    </form>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        <nav>
+            <ul>
+                {% for p in page_obj.paginator.page_range %}
+                <li>
+                    <a href = "?page={{ p }}">{{ p }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+
+        </div> <!-- END of content -->
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock %}

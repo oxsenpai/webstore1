@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form action="." method="POST" class="order_form">
+    <div>
+        <div>
+            <div>
+                <h2>Оплата</h2>
+                <h3>Реквизиты</h3>
+                        {{ form.as_p }}
+            </div>
+        </div>
+        <div>
+            <h3>Ваш заказ</h3>
+            <div style ="position: relative;">
+                <table class = "products_table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                    {% with product=item.product %}
+                        <tr>
+                            <td>
+                                {{ item.product.name}} <strong>× {{ item.quantity }}</strong> </td>
+                            <td>
+                                <span>{{item.price}} ₽</span> </td>
+                        </tr>
+                    {% endwith %}
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Доставка</th>
+                            <td> Бесплатно</td>
+                        </tr>
+                        <tr>
+                            <th>Итого</th>
+                            <td><strong><span>{{cart.get_total_price}} ₽</span></strong> </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class = "paypal_form">
+                    <input type="radio" data-order_button_text="Proceed to PayPal" value="paypal" name="payment_method" class="input-radio" id="payment_method_paypal">
+                    <label for="payment_method_paypal">PayPal<img alt="PayPal Acceptance Mark" src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png"></>
+                    </label>
+                    <div style="display:none;"/>
+                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                    </div>
+                </div>
+                <div class = "create_order_btn">
+                <input type="submit" value="Сделать заказ"></p>
+                            {% csrf_token %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

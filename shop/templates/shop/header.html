@@ -1,0 +1,59 @@
+{% load static %}
+
+
+
+<div id="templatemo_wrapper">
+	<div id="templatemo_header">
+    	<div id="site_title"><h1><a href="http://www.templatemo.com"></a></h1></div>
+
+        <div id="header_right">
+
+            <div class="cleaner"></div>
+
+         </div> <!-- END -->
+    </div> <!-- END of header -->
+
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products/">Категории</a>
+                <ul>
+                    {% for c in category_of_products %}
+                    <li><a href="{{c.get_absolute_url}}">{{c.name}}</a></li>
+                    {% endfor %}
+              </ul>
+            </li>
+            <li><a href="/about/">О нас</a>
+            </li>
+            <li><a href="/faqs/">Справка</a></li>
+
+            <li><a href="/contact/">Контакты</a></li>
+            <li><a href="/cart/">Корзина</a></li>
+            {% if user.is_authenticated %}
+            <li> {{user.username}} |<a href="{% url 'users:logout' %}">Выйти</a></li>
+            {%else%}
+            <li><a href="{% url 'users:login' %}">Войти</a> | <a href="#">Регистрация</a></li>
+            {% endif %}
+        </ul>
+        <br style="clear: left" />
+    </div> <!-- end of templatemo_menu -->
+
+
+        <div id="sidebar">
+        	<h3>Категории</h3>
+            <ul class="sidebar_menu">
+                {% for c in category_of_products %}
+			    <li><a href="{{c.get_absolute_url}}">{{c.name}}</a></li>
+                {% endfor %}
+			</ul>
+            <h3>Newsletter</h3>
+            <p>Praesent aliquam mi id tellus pretium pulvinar in vel ligula.</p>
+            <div id="newsletter">
+                <form action="#" method="get">
+                  <input type="text" value="Subscribe" name="email_newsletter" id="email_newsletter" title="email_newsletter" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+                  <input type="submit" name="subscribe" value="Subscribe" alt="Subscribe" id="subscribebtn" title="Subscribe" class="subscribebtn"  />
+                </form>
+                <div class="cleaner"></div>
+            </div>
+        </div> <!-- END of sidebar -->
+

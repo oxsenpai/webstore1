@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<div class = "cart_content">
+    <h1>Корзина</h1>
+    <div>
+        <div>
+            <form method="post" action="#">
+                <table cellspacing="0" class = "cart_table">
+                    <thead>
+                        <tr>
+                            <th class="product_remove">&nbsp;</th>
+                            <th class="product_thumbnail">&nbsp;</th>
+                            <th>Товар</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Стоимость</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                            <tr class = "product_row">
+                                <td class="product_remove">
+                                    <form action="{% url 'cart:cart_remove' item.product.id %}"
+                                          method="post">
+                                        <button class = "product_remove_btn" type="submit" formaction="{% url 'cart:cart_remove' product.id %}">X
+                                            {% csrf_token %}
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a href="{{ item.product.get_absolute_url }}"><img width="96" height="96" src="{{ item.product.image.url }}"></a>
+                                </td>
+                                <td>
+                                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
+                                </td>
+                                <td>
+                                    <span>{{item.product.price}} ₽</span>
+                                </td>
+                                <td>
+                                    <div>
+
+                                        <input type="number" size="4" value="{{ item.quantity }}" min="0" step="1">
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>{{ item.total_price }} ₽</span>
+                                </td>
+                            </tr>
+                            {% endwith %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+
+                <div class = "total_price">
+                    <div>
+                        <h2>Итого к оплате</h2>
+                        <table cellspacing="0" class = "total_price_table">
+                            <tbody>
+                            <tr>
+                                <th>Доставка</th>
+                                <td>Бесплатно</td>
+                            </tr>
+                            <tr>
+                                <th>Итого к оплате</th>
+                                <td><strong><span>{{ cart.get_total_price }}</span></strong></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class = "order_create_btn">
+                        {% if user.is_authenticated %}
+                        <button type="submit"  name="proceed" formaction="{% url 'orders:order_create' %}">
+                            {% csrf_token %}
+                            Перейти к оплате
+                        </button>
+                        {% else %}
+                        <button type="submit"  name="proceed" formaction="{% url 'users:login' %}">
+                            {% csrf_token %}
+                            Войти для оформления заказа
+                        </button>
+                        {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{%endblock%}

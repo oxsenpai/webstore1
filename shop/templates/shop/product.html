@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+        <div id="content">
+        	<h2>{{product.name}}</h2>
+            <div class="col col_13">
+        	<a rel="lightbox[portfolio]" href="{{product.image.url}}" title=""><img src="{{product.image.url}}" alt="Image 10" /></a>
+            </div>
+            <div class="col col_13 no_margin_right">
+                <table>
+                    <tr>
+                        <td height="30" width="160">Цена:</td>
+                        <td>{{product.price}} ₽</td>
+                    </tr>
+                    <tr>
+                        <td height="30">Наличие:</td>
+                        <td>
+                            {% if product.available %}
+                            есть
+                            {% else %}
+                            нет
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30">Категория:</td>
+                        <td>{{product.category}}</td>
+                    </tr>
+                    <tr><td height="30">Кол-во</td><td><input type="text" value="1" style="width: 20px; text-align: right" /></td></tr>
+                </table>
+                <div class="cleaner h20"></div>
+                <form action="{% url 'cart:cart_add' product.id %}" class="cart" method="post">
+                    {% csrf_token %}
+                    <button class="add_to_cart" type="submit" value="1" name="quantity">Добавить в корзину</button>
+                </form>
+			</div>
+            <div class="cleaner h30"></div>
+
+            <h5><strong>Описание</strong></h5>
+            <p>{{product.description}}</p>
+
+            <div class="cleaner h50"></div>
+
+            <h4>Другие товары</h4>
+            {% for p in products %}
+            {% if p.id != product.id %}
+        	<div class="col col_10 product_gallery">
+            	<a href="{{p.get_absolute_url}}"><img src="{{p.image.url}}" alt="Product 01" /></a>
+                <h3>{{p.name}}</h3>
+                <p class="product_price">{{p.price}} ₽</p>
+                <form action="{% url 'cart:cart_add' p.id %}" class="cart" method="post">
+                    {% csrf_token %}
+                    <button class="add_to_cart" type="submit" value="1" name="quantity">Добавить в корзину</button>
+                </form>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <a href="/products/" class="more float_r">Смотреть еще</a>
+
+            <div class="cleaner"></div>
+        </div> <!-- END of content -->
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock %}
