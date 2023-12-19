@@ -28,7 +28,7 @@
                         <td height="30">Категория:</td>
                         <td>{{product.category}}</td>
                     </tr>
-                    <tr><td height="30">Кол-во</td><td><input type="text" value="1" style="width: 20px; text-align: right" /></td></tr>
+                    <tr><td height="30">Кол-во</td><td><input readonly type="text" value="1" style="width: 20px; text-align: right" /></td></tr>
                 </table>
                 <div class="cleaner h20"></div>
                 <form action="{% url 'cart:cart_add' product.id %}" class="cart" method="post">

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-Успешно
+{% block content %}
 
-</body>
-</html>
+<h2>Успешно, номер заказа {{order.id}}</h2>
+
+{%endblock%}
