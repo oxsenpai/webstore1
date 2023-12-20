@@ -41,9 +41,12 @@
                                 </td>
                                 <td>
                                     <div>
-
-                                        <input readonly type="number" size="4" value="{{ item.quantity }}" min="0" step="1">
-
+                                        <form action = "{% url 'cart:cart_add' product.id %}" method="post">
+                                            {{item.update_quantity_form.quantity}}
+                                            {{item.update_quantity_form.update}}
+                                            <input type = "submit" value="✓">
+                                            {% csrf_token %}
+                                        </form>
                                     </div>
                                 </td>
                                 <td>

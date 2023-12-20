@@ -7,4 +7,4 @@ class CartAddProductForm(forms.Form):
         max_value=99,
         min_value=1
     )
-    override = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+    update = forms.BooleanField(required=False, initial=False)
