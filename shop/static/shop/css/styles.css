@@ -1,3 +1,9 @@
+.logout_button{
+    border: none;
+    cursor: pointer;
+    background: none;
+    margin-top: 12px;
+}
 
 .order_form {
     margin-left: 256px;
